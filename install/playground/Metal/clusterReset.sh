@@ -1,4 +1,4 @@
-#!/bin/bash
+
 # reseting the cluster : 
 kubeadm reset -f
 kubeadm init --pod-network-cidr=10.244.0.0/16
@@ -17,9 +17,10 @@ ssh -i $WORKER_SSH_KEY root@$WORKER_NODE --  "kubeadm reset -f && iptables -F &&
 kubectl taint node $MASTER_NODE "node-role.kubernetes.io/control-plane:NoSchedule"-
 # installing the networking pluging flannel 
 kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+# give services some time to get ready 
+sleep 5
 # installing Meshery 
-git clone https://github.com/layer5io/meshery.git;
-cd meshery
+
 kubectl create ns meshery
 kubectl -n meshery apply -f install/deployment_yamls/k8s
 
@@ -36,7 +37,7 @@ kubectl apply -f - -n kube-system
 
 # installing by manifest 
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml
-
+sleep 5 
 # creating IP pool 
 kubectl create -f install/playground/Metal/ip-pool.yaml
 
@@ -47,6 +48,7 @@ kubectl -n meshery   expose deploy meshery  --port 9082 --target-port 8080 # clu
 
 # nginx-controller installtion
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
+sleep 5
 #kubectl -n meshery  create ingress meshery --rule="demo.meshery.io/*=meshery:9082" --class nginx
 # cert manager installtion 
 
