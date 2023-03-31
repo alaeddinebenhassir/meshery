@@ -7,9 +7,9 @@ cd meshery
 ```
 2. set the fellowing env vars :
 ```console
-WORKER_NODE="{worker-hostname}"
-MASTER_NODE="{Master-hostname}"
-WORKER_SSH_KEY="{ssh-key-location}"
+export WORKER_NODE="{worker-hostname}"
+export MASTER_NODE="{Master-hostname}"
+export WORKER_SSH_KEY="{ssh-key-location}"
 ```
 3. Run the script
 ```console
