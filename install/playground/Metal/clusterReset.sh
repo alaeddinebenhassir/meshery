@@ -1,6 +1,4 @@
-WORKER_NODE="c3-medium-x86-01-meshery"
-MASTER_NODE="c3-medium-x86-02-meshery"
-WORKER_SSH_KEY=/root/.ssh/worker.key
+#!/bin/bash
 # reseting the cluster : 
 kubeadm reset -f
 kubeadm init --pod-network-cidr=10.244.0.0/16
@@ -49,7 +47,7 @@ kubectl -n meshery   expose deploy meshery  --port 9082 --target-port 8080 # clu
 
 # nginx-controller installtion
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
-#kubectl -n meshery  create ingress meshery --rule="playground.norfendre-cloud/*=meshery:9082" --class nginx
+#kubectl -n meshery  create ingress meshery --rule="demo.meshery.io/*=meshery:9082" --class nginx
 # cert manager installtion 
 
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.yaml
