@@ -12,7 +12,7 @@ kubectl taint node $MASTER_NODE node-role.kubernetes.io/control-plane:NoSchedule
 # installing the networking pluging flannel 8
 kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 # give services some time to get ready 
-sleep 5
+sleep 8
 # installing Meshery 
 kubectl create ns meshery
 kubectl -n meshery apply -f install/deployment_yamls/k8s
@@ -27,7 +27,7 @@ sed -e "s/strictARP: false/strictARP: true/" | \
 kubectl apply -f - -n kube-system
 # installing by manifest 
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.9/config/manifests/metallb-native.yaml
-sleep 5 
+sleep 10
 # creating IP pool 
 kubectl create -f install/playground/Metal/ip_pool.yaml
 # Exposing meshery with service Type NodePort
