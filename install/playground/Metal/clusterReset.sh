@@ -6,7 +6,7 @@ mkdir -p $HOME/.kube
 cp  /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
 # cleannig the node && joining the worker node
-ssh -o BatchMode -i $WORKER_SSH_KEY root@$WORKER_NODE -- "kubeadm reset -f && iptables -F && $(kubeadm token create --print-join-command)"
+ssh -i $WORKER_SSH_KEY -o BatchMode=true root@$WORKER_NODE -- "kubeadm reset -f && iptables -F && $(kubeadm token create --print-join-command)"
  # untaint the master node 
 kubectl taint node $MASTER_NODE node-role.kubernetes.io/control-plane:NoSchedule-
 # installing the networking pluging flannel 8
